@@ -133,3 +133,5 @@ dmypy.json
 
 # Datasets
 data/
+
+*.pt
