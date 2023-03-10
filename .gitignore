@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# MacOS garbage
+.DS_Store
+
+# Datasets
+data/
