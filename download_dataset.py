@@ -17,6 +17,11 @@ for ds in [
 ]:
     for split in ['train', 'valid', 'test']:
         filename = ds + "." + split + '.jsonl'
+
+        if os.path.exists(os.path.join(subdir, filename)):
+            print(f"File '{filename}' already exists. It will not be downloaded again.")
+            continue
+
         r = requests.get("https://openaipublic.azureedge.net/gpt-2/output-dataset/v1/" + filename, stream=True)
 
         with open(os.path.join(subdir, filename), 'wb') as f:
