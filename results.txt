@@ -1,0 +1,370 @@
+WebText Train, cleaned, 100k 
+
+ds_hw_filename = 'webtext.train.jsonl.clean100k.csv'
+gtc_evaluate_with_checkpoints(hw_pd, solaiman_detector, checkpoint=10000, score_func=safe_accuracy)
+
+----- split #0 (size: 10000) -----
+ [[9677  323]
+ [   0    0]]
+----- acc: 0.9677 -----
+----- split #1 (size: 10000) -----
+ [[9682  318]
+ [   0    0]]
+----- acc: 0.9682 -----
+----- split #2 (size: 10000) -----
+ [[9722  278]
+ [   0    0]]
+----- acc: 0.9722 -----
+----- split #3 (size: 10000) -----
+ [[9696  304]
+ [   0    0]]
+----- acc: 0.9696 -----
+----- split #4 (size: 10000) -----
+ [[9657  343]
+ [   0    0]]
+----- acc: 0.9657 -----
+----- split #5 (size: 10000) -----
+ [[9703  297]
+ [   0    0]]
+----- acc: 0.9703 -----
+----- split #6 (size: 10000) -----
+ [[9666  334]
+ [   0    0]]
+----- acc: 0.9666 -----
+----- split #7 (size: 10000) -----
+ [[9739  261]
+ [   0    0]]
+----- acc: 0.9739 -----
+----- split #8 (size: 10000) -----
+ [[9691  309]
+ [   0    0]]
+----- acc: 0.9691 -----
+----- split #9 (size: 10000) -----
+ [[9670  330]
+ [   0    0]]
+----- acc: 0.967 -----
+====================================
+ Final confusion matrix:
+ [[96903.  3097.]
+ [    0.     0.]]
+ Final accuracy: 0.96903
+====================================
+CPU times: user 1d 13h 15min 52s, sys: 6min 44s, total: 1d 13h 22min 36s
+Wall time: 2h 20min 10s
+
+
+===================
+
+GPT2_output, xl-1542M, train set, clean, 100k
+
+ds_mg_filename = 'xl-1542M.train.jsonl.clean100k.csv'
+gtc_evaluate_with_checkpoints(mg_pd, solaiman_detector, checkpoint=10000, score_func=safe_accuracy)
+----- split #0 (size: 10000) -----
+ [[   0    0]
+ [1100 8900]]
+----- acc: 0.89 -----
+----- split #1 (size: 10000) -----
+ [[   0    0]
+ [1105 8895]]
+----- acc: 0.8895 -----
+----- split #2 (size: 10000) -----
+ [[   0    0]
+ [1099 8901]]
+----- acc: 0.8901 -----
+----- split #3 (size: 10000) -----
+ [[   0    0]
+ [1126 8874]]
+----- acc: 0.8874 -----
+----- split #4 (size: 10000) -----
+ [[   0    0]
+ [1109 8891]]
+----- acc: 0.8891 -----
+----- split #5 (size: 10000) -----
+ [[   0    0]
+ [1069 8931]]
+----- acc: 0.8931 -----
+----- split #6 (size: 10000) -----
+ [[   0    0]
+ [1071 8929]]
+----- acc: 0.8929 -----
+----- split #7 (size: 10000) -----
+ [[   0    0]
+ [1100 8900]]
+----- acc: 0.89 -----
+----- split #8 (size: 10000) -----
+ [[   0    0]
+ [1076 8924]]
+----- acc: 0.8924 -----
+----- split #9 (size: 10000) -----
+ [[   0    0]
+ [1102 8898]]
+----- acc: 0.8898 -----
+====================================
+ Final confusion matrix:
+ [[    0.     0.]
+ [10957. 89043.]]
+ Final accuracy: 0.89043
+====================================
+CPU times: user 1d 13h 21min 45s, sys: 5min 28s, total: 1d 13h 27min 14s
+Wall time: 2h 20min 27s
+
+
+============================
+
+Webtext + GPT2 output, test set, not cleaned
+
+ds_hwraw_filename = 'webtext.test.jsonl'
+ds_hw_raw = pd.read_json(os.path.join(data_path, ds_hwraw_filename), lines = True)
+ds_mgraw_filename = 'xl-1542M.test.jsonl'
+ds_mg_raw = pd.read_json(os.path.join(data_path, ds_mgraw_filename), lines = True)
+
+mg_raw_pd = create_dataset(ds_mg_raw["text"], is_machine_generated=True)
+hw_raw_pd = create_dataset(ds_hw_raw["text"], is_machine_generated=False)
+
+
+%%time
+gtc_evaluate_with_checkpoints(mg_raw_pd, solaiman_detector, checkpoint=1000, score_func=safe_accuracy)
+
+----- split #0 (size: 1000) -----
+ [[  0   0]
+ [132 868]]
+----- acc: 0.868 -----
+----- split #1 (size: 1000) -----
+ [[  0   0]
+ [124 876]]
+----- acc: 0.876 -----
+----- split #2 (size: 1000) -----
+ [[  0   0]
+ [137 863]]
+----- acc: 0.863 -----
+----- split #3 (size: 1000) -----
+ [[  0   0]
+ [121 879]]
+----- acc: 0.879 -----
+----- split #4 (size: 1000) -----
+ [[  0   0]
+ [125 875]]
+----- acc: 0.875 -----
+====================================
+ Final confusion matrix:
+ [[   0.    0.]
+ [ 639. 4361.]]
+ Final accuracy: 0.8722
+====================================
+CPU times: user 2h 51min 35s, sys: 26.5 s, total: 2h 52min 2s
+Wall time: 14min 55s
+
+%%time
+gtc_evaluate_with_checkpoints(hw_raw_pd, solaiman_detector, checkpoint=1000, score_func=safe_accuracy)
+
+----- split #0 (size: 1000) -----
+ [[955  45]
+ [  0   0]]
+----- acc: 0.955 -----
+----- split #1 (size: 1000) -----
+ [[947  53]
+ [  0   0]]
+----- acc: 0.947 -----
+----- split #2 (size: 1000) -----
+ [[941  59]
+ [  0   0]]
+----- acc: 0.941 -----
+----- split #3 (size: 1000) -----
+ [[937  63]
+ [  0   0]]
+----- acc: 0.937 -----
+----- split #4 (size: 1000) -----
+ [[956  44]
+ [  0   0]]
+----- acc: 0.956 -----
+====================================
+ Final confusion matrix:
+ [[4736.  264.]
+ [   0.    0.]]
+ Final accuracy: 0.9472
+====================================
+CPU times: user 2h 44min 55s, sys: 18.1 s, total: 2h 45min 13s
+Wall time: 14min 14s
+
+
+
+===========
+
+GPT3
+
+gpt3_data_path = "./../../get_text_detect_space/datasets/GPT3"
+gpt3_ds_mg_filename = '175b_samples.jsonl'
+with open(os.path.join(gpt3_data_path, gpt3_ds_mg_filename), 'r') as file:
+    gpt3_ds_mg = [x for x in file.readlines() if x is not None and x != "\n"]
+gpt3_mg_pd = create_dataset(gpt3_ds_mg, is_machine_generated=True)
+%%time
+gtc_evaluate_with_checkpoints(gpt3_mg_pd, solaiman_detector, checkpoint=1000, score_func=safe_accuracy)
+Token indices sequence length is longer than the specified maximum sequence length for this model (1026 > 512). Running this sequence through the model will result in indexing errors
+
+====================================
+ Final confusion matrix:
+ [[  0.   0.]
+ [339. 146.]]
+ Final accuracy: 0.30103092783505153
+====================================
+CPU times: user 13min 51s, sys: 1.7 s, total: 13min 53s
+Wall time: 52.1 s
+
+
+
+
+===========
+
+GROVER p1.0
+
+grover_data_path = "./../../get_text_detect_space/datasets/GROVER/"
+grover_datasets = sorted([f for f in os.listdir(grover_data_path) if os.path.isfile(os.path.join(grover_data_path, f))])
+
+grover_ds_filename = 'generator=mega~dataset=p1.00.jsonl'
+grover_ds = pd.read_json(os.path.join(grover_data_path, grover_ds_mg_filename), lines = True)
+grover_ds_mg = grover_ds[(grover_ds['label'] == 'machine')]
+grover_ds_hw = grover_ds[(grover_ds['label'] == 'human')]
+grover_mg_pd = create_dataset(grover_ds_mg["article"], is_machine_generated=True)
+grover_hw_pd = create_dataset(grover_ds_hw["article"], is_machine_generated=False)
+
+gtc_evaluate_with_checkpoints(grover_mg_pd, solaiman_detector, checkpoint=2500, score_func=safe_accuracy)
+
+----- split #0 (size: 2500) -----
+ [[   0    0]
+ [ 961 1539]]
+----- acc: 0.6156 -----
+----- split #1 (size: 2500) -----
+ [[   0    0]
+ [ 985 1515]]
+----- acc: 0.606 -----
+----- split #2 (size: 2500) -----
+ [[   0    0]
+ [ 977 1523]]
+----- acc: 0.6092 -----
+----- split #3 (size: 2500) -----
+ [[   0    0]
+ [ 985 1515]]
+----- acc: 0.606 -----
+====================================
+ Final confusion matrix:
+ [[   0.    0.]
+ [3908. 6092.]]
+ Final accuracy: 0.6092
+====================================
+CPU times: user 3h 48min 23s, sys: 34.4 s, total: 3h 48min 57s
+Wall time: 14min 18s
+
+
+
+%%time
+gtc_evaluate_with_checkpoints(grover_hw_pd, solaiman_detector, checkpoint=2500, score_func=safe_accuracy)
+
+----- split #0 (size: 2500) -----
+ [[2435   65]
+ [   0    0]]
+----- acc: 0.974 -----
+----- split #1 (size: 2500) -----
+ [[2427   73]
+ [   0    0]]
+----- acc: 0.9708 -----
+----- split #2 (size: 2500) -----
+ [[2415   85]
+ [   0    0]]
+----- acc: 0.966 -----
+----- split #3 (size: 2500) -----
+ [[2419   81]
+ [   0    0]]
+----- acc: 0.9676 -----
+----- split #4 (size: 2500) -----
+ [[2435   65]
+ [   0    0]]
+----- acc: 0.974 -----
+----- split #5 (size: 2500) -----
+ [[2429   71]
+ [   0    0]]
+----- acc: 0.9716 -----
+====================================
+ Final confusion matrix:
+ [[14560.   440.]
+ [    0.     0.]]
+ Final accuracy: 0.9706666666666667
+====================================
+CPU times: user 5h 47min 35s, sys: 53.5 s, total: 5h 48min 29s
+Wall time: 21min 46s
+
+=====================
+
+Grover P0.90
+
+grover_ds_filename = 'generator=mega~dataset=p0.90.jsonl'
+grover_ds = pd.read_json(os.path.join(grover_data_path, grover_ds_mg_filename), lines = True)
+grover_ds_mg = grover_ds[(grover_ds['label'] == 'machine')]
+grover_ds_hw = grover_ds[(grover_ds['label'] == 'human')]
+grover_mg_pd = create_dataset(grover_ds_mg["article"], is_machine_generated=True)
+grover_hw_pd = create_dataset(grover_ds_hw["article"], is_machine_generated=False)
+
+%%time
+gtc_evaluate_with_checkpoints(grover_hw_pd, solaiman_detector, checkpoint=2500, score_func=safe_accuracy)
+
+----- split #0 (size: 2500) -----
+ [[2435   65]
+ [   0    0]]
+----- acc: 0.974 -----
+----- split #1 (size: 2500) -----
+ [[2427   73]
+ [   0    0]]
+----- acc: 0.9708 -----
+----- split #2 (size: 2500) -----
+ [[2415   85]
+ [   0    0]]
+----- acc: 0.966 -----
+----- split #3 (size: 2500) -----
+ [[2419   81]
+ [   0    0]]1
+----- acc: 0.9676 -----
+----- split #4 (size: 2500) -----
+ [[2435   65]
+ [   0    0]]
+----- acc: 0.974 -----
+----- split #5 (size: 2500) -----
+ [[2429   71]
+ [   0    0]]
+----- acc: 0.9716 -----
+====================================
+ Final confusion matrix:
+ [[14560.   440.]
+ [    0.     0.]]
+ Final accuracy: 0.9706666666666667
+====================================
+CPU times: user 5h 49min 26s, sys: 50.9 s, total: 5h 50min 16s
+Wall time: 21min 53s
+
+
+%%time
+
+gtc_evaluate_with_checkpoints(grover_mg_pd, solaiman_detector, checkpoint=2500, score_func=safe_accuracy)
+
+----- split #0 (size: 2500) -----
+ [[   0    0]
+ [1062 1438]]
+----- acc: 0.5752 -----
+----- split #1 (size: 2500) -----
+ [[   0    0]
+ [1020 1480]]
+----- acc: 0.592 -----
+----- split #2 (size: 2500) -----
+ [[   0    0]
+ [1095 1405]]
+----- acc: 0.562 -----
+----- split #3 (size: 2500) -----
+ [[   0    0]
+ [1076 1424]]
+----- acc: 0.5696 -----
+====================================
+ Final confusion matrix:
+ [[   0.    0.]
+ [4253. 5747.]]
+ Final accuracy: 0.5747
+====================================
+CPU times: user 3h 22min 19s, sys: 7.84 s, total: 3h 22min 27s
+Wall time: 12min 39s
