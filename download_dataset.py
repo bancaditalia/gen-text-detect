@@ -46,7 +46,8 @@ for ds in [
 
 # download Grover dataset
 grover_size = ['base', 'medium', 'mega']
-grover_p = ['0.90', '0.92', '0.94', '0.96', '0.98', '1.00']
+# grover_p = ['0.90', '0.92', '0.94', '0.96', '0.98', '1.00'] # uncomment this line to download all the available datasets
+grover_p = ['0.94']
 for size in grover_size:
     for p in grover_p:
         get_remote_file(f"generator={size}~dataset=p{p}.jsonl",
